@@ -1,11 +1,13 @@
-# Используем базовый образ с NGINX
-FROM nginx:latest
+# Используем базовый образ PostgreSQL из Docker Hub
+FROM postgres:latest
 
-# Копируем конфигурационный файл NGINXdocker build -t custom-nginx .
-COPY nginx.conf /etc/nginx/nginx.conf
+# Переменные окружения для создания пользователя и базы данных
+ENV POSTGRES_USER test
+ENV POSTGRES_PASSWORD kirilltest
+ENV POSTGRES_DB test
 
-# Указываем порт, на котором будет работать NGINX
-EXPOSE 80
+# Копируем скрипт инициализации в контейнер
+COPY init.sql /docker-entrypoint-initdb.d/
 
-# Команда для запуска NGINX в фоновом режиме
-CMD ["nginx", "-g", "daemon off;"]
+# Указываем порт, на котором будет работать PostgreSQL
+EXPOSE 5432
