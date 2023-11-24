@@ -1,0 +1,8 @@
+ # Сборка Docker-образа
+docker build -t custom-nginx .
+
+# Запуск Docker-контейнера
+docker run -p 8080:80 custom-nginx
+
+# Должен вернуть Forbidden, так как используется GET запрос
+curl -I http://localhost:8080
